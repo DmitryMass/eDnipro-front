@@ -1,12 +1,12 @@
-import { Inter } from 'next/font/google';
+import { Auth } from '@/components/auth/Auth';
 
-const inter = Inter({ subsets: ['latin'] });
+import type { FC } from 'react';
 
-const Home = () => {
+const Home: FC = () => {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    ></main>
+    <div className={'pt-5 pb-10 flex items-center justify-center h-screen'}>
+      <Auth />
+    </div>
   );
 };
 export default Home;

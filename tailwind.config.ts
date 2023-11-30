@@ -13,6 +13,9 @@ const config: Config = {
       },
       maxWidth: {
         mainContainer: 'calc(100vw - 264px)',
+        container: '960px',
+        loginContainer: '500px',
+        headerContainer: '992px',
       },
       fontSize: {
         xs10: ['10px', '12px'],
@@ -57,7 +60,6 @@ const config: Config = {
         btnBlueHover: '#006fe6',
         btnRed: '#dc3545',
         btnRedHover: '#a71d2a',
-
         grayStroke: {
           100: '#596268',
           90: '#494e54',
