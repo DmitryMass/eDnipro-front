@@ -8,3 +8,8 @@ body,
   height: 100%;
   width: 100%;
 }
+
+body {
+  color: #e2e6ea;
+  background: #f8f9fa;
+}

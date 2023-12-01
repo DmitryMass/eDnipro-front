@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { FC, ReactNode } from 'react';
 import { AsidePanel } from './AsidePanel';
-import { useSession } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,7 +13,6 @@ type MainLayoutProps = {
 
 export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const { pathname } = useRouter();
-  const session = useSession();
 
   // useEffect(() => {
   //не забыть написать ф-цию на чек токена
@@ -27,11 +25,10 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         'bg-grayStroke-40 max-lg:block flex items-start'
       )}
     >
-      {/* предварительно так (нужно обрабатывать вариант если страницы не существует, пока срабатывает кастомный notfound) */}
       {pathname === ROUTE.HOME ? null : <AsidePanel />}
       <main
         className={clsx(
-          'flex-1 relative',
+          'flex-1',
           pathname === ROUTE.HOME
             ? 'max-w-loginContainer mx-auto px-3.5'
             : null,

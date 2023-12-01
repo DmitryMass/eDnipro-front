@@ -1,13 +1,8 @@
-import { useState, type FC } from 'react';
-
 import { useAuth } from '@/hooks/useAuth';
 import clsx from 'clsx';
+import { useState, type FC } from 'react';
 import { Loader } from '../ui/Loader';
-
-type TUserLoginInfo = {
-  email: string;
-  password: string;
-};
+import { MainButton } from '../ui/MainButton';
 
 export const Auth: FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -89,16 +84,12 @@ export const Auth: FC = () => {
               </span>
             ) : null}
           </label>
-          <button
-            disabled={isSubmitting}
-            type='submit'
-            className='bg-mainBlue text-white text-sm14 hover:bg-blueHover transition-all duration-200 flex justify-center items-center w-full font-semibold text-sm16 rounded-[0.25rem] border border-transparent py-1.5 px-4'
-          >
+          <MainButton type='submit' disabled={isSubmitting}>
             {isSubmitting ? <Loader /> : isLogin ? 'Увійти' : 'Зареєструватися'}
-          </button>
+          </MainButton>
           <span
             onClick={() => setIsLogin((prev) => !prev)}
-            className='w-full block text-center text-s14 text-mainBLue cursor-pointer select-none hover:text-btnBlueHover'
+            className='w-full block text-center text-s14 text-slate-800 cursor-pointer select-none hover:text-black'
           >
             {isLogin ? 'Перейти до реєстрації' : 'Перейти до входу'}
           </span>

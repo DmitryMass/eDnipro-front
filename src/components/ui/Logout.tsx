@@ -5,7 +5,7 @@ export const Logout: FC = () => {
   const { handleSignOut } = useSignOut();
   return (
     <button className='text-grayStroke-30 block' onClick={handleSignOut}>
-      Logout
+      Вихід
     </button>
   );
 };
