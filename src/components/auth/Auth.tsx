@@ -1,6 +1,6 @@
 import { useState, type FC } from 'react';
 
-import { useSignIn } from '@/hooks/useSignIn';
+import { useAuth } from '@/hooks/useAuth';
 import clsx from 'clsx';
 import { Loader } from '../ui/Loader';
 
@@ -12,22 +12,34 @@ type TUserLoginInfo = {
 export const Auth: FC = () => {
   const [isLogin, setIsLogin] = useState(true);
 
-  const { loginFormSubmit, register, handleSubmit, errors, isSubmitting } =
-    useSignIn();
-
-  const handleRegistration = async (data: any) => {
-    console.log(data, 'register test');
-  };
+  const {
+    loginFormSubmit,
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    handleRegistration,
+  } = useAuth({ setIsLogin: () => setIsLogin((prev) => !prev) });
 
   return (
-    <div className='relative max-w-loginContainer mx-auto w-full px-6 text-black py-10 h-[370px] bg-grayStroke-100 bg-opacity-[0.05] rounded-md border border-grayStroke-80'>
+    <div className='relative max-w-loginContainer mx-auto w-full px-6 text-black py-10 h-[390px] bg-grayStroke-100 bg-opacity-[0.05] rounded-md border border-grayStroke-80'>
       <div className='text-center border-b border-grayStroke-100 border-opacity-20 pb-5 mb-7'>
-        <h3 className='mb-2 font-semibold text-2xl'>Увійти</h3>
+        <h3 className='mb-2 font-semibold text-2xl'>
+          {isLogin ? 'Увійти' : 'Зареєструватися'}
+        </h3>
         <p className='text-sm16 text-grayStroke-70'>
-          Почніть творити неймовірні речі
+          {isLogin
+            ? ' Почніть творити неймовірні речі'
+            : 'Зареєструйте особистий обліковий запис у два кліки'}
         </p>
       </div>
-      <form onSubmit={handleSubmit(loginFormSubmit)}>
+      <form
+        onSubmit={
+          isLogin
+            ? handleSubmit(loginFormSubmit)
+            : handleSubmit(handleRegistration)
+        }
+      >
         <div className='flex flex-col justify-center items-stretch gap-6'>
           <label className='relative'>
             <input

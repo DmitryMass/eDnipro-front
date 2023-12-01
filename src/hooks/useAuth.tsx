@@ -1,4 +1,5 @@
 import { ROUTE } from '@/utils/routes';
+import axios from 'axios';
 import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
@@ -9,7 +10,11 @@ type TUserLoginInfo = {
   password: string;
 };
 
-export const useSignIn = () => {
+type TUseAuth = {
+  setIsLogin: () => void;
+};
+
+export const useAuth = ({ setIsLogin }: TUseAuth) => {
   const {
     register,
     handleSubmit,
@@ -39,11 +44,25 @@ export const useSignIn = () => {
     }
   };
 
+  const handleRegistration = async (data: TUserLoginInfo) => {
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_DATABASE_URL}/auth/registration`,
+        data
+      );
+      toast.success(`${data.email} has successfully registered`);
+      setIsLogin();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error);
+    }
+  };
+
   return {
     loginFormSubmit,
     register,
     handleSubmit,
     errors,
     isSubmitting,
+    handleRegistration,
   };
 };

@@ -1,11 +1,10 @@
 import { ROUTE } from '@/utils/routes';
 import clsx from 'clsx';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Logout } from '../ui/Logout';
 import { AsideNav } from './AsideNav';
-import { useSession } from 'next-auth/react';
 
 export const AsidePanel: FC = () => {
   const session = useSession();
