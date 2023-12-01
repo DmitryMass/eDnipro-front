@@ -1,8 +1,13 @@
 import { useState, type FC } from 'react';
 
-import { Loader } from '../ui/Loader';
-import clsx from 'clsx';
 import { useSignIn } from '@/hooks/useSignIn';
+import clsx from 'clsx';
+import { Loader } from '../ui/Loader';
+
+type TUserLoginInfo = {
+  email: string;
+  password: string;
+};
 
 export const Auth: FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,13 +27,7 @@ export const Auth: FC = () => {
           Почніть творити неймовірні речі
         </p>
       </div>
-      <form
-        onSubmit={
-          isLogin
-            ? handleSubmit(loginFormSubmit)
-            : handleSubmit(handleRegistration)
-        }
-      >
+      <form onSubmit={handleSubmit(loginFormSubmit)}>
         <div className='flex flex-col justify-center items-stretch gap-6'>
           <label className='relative'>
             <input

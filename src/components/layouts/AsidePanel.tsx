@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import { Logout } from '../ui/Logout';
+import { AsideNav } from './AsideNav';
+import { useSession } from 'next-auth/react';
 
 export const AsidePanel: FC = () => {
-  const { pathname } = useRouter();
+  const session = useSession();
 
-  if (pathname === ROUTE.HOME) {
+  if (!session.data?.user) {
     return null;
   }
 
@@ -26,7 +28,7 @@ export const AsidePanel: FC = () => {
             </Link>
             <Logout />
           </div>
-          {/* Добавить меню навигации */}
+          <AsideNav />
         </div>
       </aside>
       <header className='bg-asidePanel lg:hidden'>Hello wrold</header>

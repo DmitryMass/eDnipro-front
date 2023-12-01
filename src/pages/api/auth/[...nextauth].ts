@@ -31,11 +31,8 @@ export const authOptions: AuthOptions = {
 
         return {
           id: loginData.id,
-          email: loginData.email,
-          firstName: loginData.firstName,
           token: loginData.token,
           userBackground: loginData.userBackground,
-          lastName: loginData.lastName,
         };
       },
     }),
@@ -43,27 +40,21 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ account, token, user }) {
       if (account) {
-        token.name = user.firstName;
+        token.name = user.id;
       }
       if (user) {
         token.token = user.token;
         token.id = user.id;
         token.email = user.email;
-        token.firstName = user.firstName;
         token.userBackground = user.userBackground;
-        token.lastName = user.lastName;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.token = token.token;
-        // @ts-ignore
-        session.user.email = token.email;
-        session.user.firstName = token.firstName;
         session.user.id = token.id;
         session.user.userBackground = token.userBackground;
-        session.user.lastName = token.lastName;
       }
       return session;
     },

@@ -1,6 +1,26 @@
 import { Auth } from '@/components/auth/Auth';
+import { ROUTE } from '@/utils/routes';
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
 
 import type { FC } from 'react';
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: ROUTE.PROJECTS,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
 
 const Home: FC = () => {
   return (
