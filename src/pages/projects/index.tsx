@@ -80,7 +80,6 @@ const Projects: FC<TProjectProps> = ({
   }
 
   const { query, push } = useRouter();
-
   const toggleSortOrder = () => {
     const currentSortOrder = query.sortBy || 'desc';
     const newSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
@@ -89,10 +88,20 @@ const Projects: FC<TProjectProps> = ({
 
   return (
     <div>
-      <Title classModificator='text-2xl mb-4 text-grayStroke-90 font-medium'>
+      <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium'>
         Проекти
       </Title>
-      <button onClick={toggleSortOrder}>SORT by createdAt</button>
+      <button
+        className='flex items-center gap-2 text-s14 hover:bg-opacity-90 font-medium mb-2 bg-asidePanel text-white p-1.5 rounded-sm'
+        onClick={toggleSortOrder}
+      >
+        Сортувати по даті
+        <img
+          className='w-5 h-5'
+          src='/icons/sort-logo.svg'
+          alt='sortby createdAt'
+        />
+      </button>
       {itemsPerPage.length && pageCount ? (
         <>
           <div className='grid grid-cols-2 max-md:grid-cols-1 gap-5 mb-14'>
