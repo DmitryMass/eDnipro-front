@@ -1,31 +1,40 @@
 import { ProjectItem } from '@/components/page-components/project/ProjectItem';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { Pagination } from '@/components/ui/Pagination';
 import { Title } from '@/components/ui/Title';
 import type { TProjectResponse } from '@/types/responses';
 import type { TProject } from '@/types/types';
 import axios from 'axios';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { type FC } from 'react';
 
 type TProjectProps = {
   itemsPerPage: TProject[];
-  pageNum: number;
-  total: number;
+  pageCount?: number;
   error?: any;
+  pageNum: number;
 };
 
 export const getServerSideProps: GetServerSideProps<TProjectProps> = async (
   ctx
 ) => {
   const session = await getSession(ctx);
+  ctx.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=120, max-age=120, stale-while-revalidate=59'
+  );
 
   let pageNum = 1;
   if (Number(ctx.query.page) >= 0) pageNum = Number(ctx.query.page);
 
+  const url = ctx.query.sortBy
+    ? `/project?page=${pageNum}&limit=6&sortBy=${ctx.query.sortBy}`
+    : `/project?page=${pageNum}&limit=6`;
   try {
     const response: TProjectResponse = await axios.get(
-      `${process.env.NEXT_PUBLIC_DATABASE_URL}/project?page=${pageNum}&limit=6`,
+      `${process.env.NEXT_PUBLIC_DATABASE_URL}${url}`,
       {
         headers: {
           Authorization: `Bearer ${session?.user.token}`,
@@ -33,11 +42,13 @@ export const getServerSideProps: GetServerSideProps<TProjectProps> = async (
       }
     );
 
+    const pageCount = Math.ceil(response.data.total / 6);
+
     return {
       props: {
         itemsPerPage: response.data.itemsPerPage,
+        pageCount,
         pageNum,
-        total: response.data.total,
       },
     };
   } catch (err: any) {
@@ -45,7 +56,6 @@ export const getServerSideProps: GetServerSideProps<TProjectProps> = async (
       props: {
         itemsPerPage: [],
         pageNum,
-        total: 1,
         error: err?.response?.data?.error
           ? err.response.data.error
           : 'Internal server error. Try later.',
@@ -56,9 +66,9 @@ export const getServerSideProps: GetServerSideProps<TProjectProps> = async (
 
 const Projects: FC<TProjectProps> = ({
   itemsPerPage,
-  pageNum,
-  total,
   error,
+  pageNum,
+  pageCount,
 }) => {
   if (error) {
     return (
@@ -68,19 +78,31 @@ const Projects: FC<TProjectProps> = ({
       />
     );
   }
+
+  const { query, push } = useRouter();
+
+  const toggleSortOrder = () => {
+    const currentSortOrder = query.sortBy || 'desc';
+    const newSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
+    push({ query: { page: 1, sortBy: newSortOrder } });
+  };
+
   return (
-    <div className='py-10'>
+    <div>
       <Title classModificator='text-2xl mb-4 text-grayStroke-90 font-medium'>
         Проекти
       </Title>
-      {itemsPerPage.length ? (
+      <button onClick={toggleSortOrder}>SORT by createdAt</button>
+      {itemsPerPage.length && pageCount ? (
         <>
-          <div className='grid grid-cols-2 max-md:grid-cols-1 gap-5 mb-5'>
+          <div className='grid grid-cols-2 max-md:grid-cols-1 gap-5 mb-14'>
             {itemsPerPage.map((project) => (
               <ProjectItem key={project._id} project={project} />
             ))}
           </div>
-          <div className='text-black text-center'>PAGINATION WITH BUTTONS </div>
+          {pageCount > 1 ? (
+            <Pagination activePageNumber={pageNum} pagesCount={pageCount} />
+          ) : null}
         </>
       ) : (
         <div className='text-black'>Project list empty</div>
