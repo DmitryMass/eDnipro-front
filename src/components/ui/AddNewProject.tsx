@@ -18,7 +18,7 @@ export const AddNewProject: FC = () => {
       <div
         className={clsx(
           'w-full h-full fixed inset-0 bg-asidePanel  flex justify-center bg-opacity-80 items-center z-20 transition-all duration-300',
-          isModalOpen ? '-translate-y-full' : '-translate-y-0'
+          isModalOpen ? '-translate-0-full' : '-translate-y-full'
         )}
       >
         <div className='max-w-xl mx-auto bg-grayStroke-50 rounded-md p-4 shadow-md relative'>

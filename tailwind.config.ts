@@ -13,7 +13,7 @@ const config: Config = {
       },
       maxWidth: {
         mainContainer: 'calc(100vw - 264px)',
-        container: '960px',
+        container: '1280px',
         loginContainer: '500px',
         headerContainer: '992px',
       },

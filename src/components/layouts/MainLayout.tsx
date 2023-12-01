@@ -30,9 +30,9 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         className={clsx(
           'flex-1',
           pathname === ROUTE.HOME
-            ? 'max-w-loginContainer mx-auto px-3.5'
+            ? 'max-w-loginContainer mx-auto px-2.5'
             : null,
-          'max-w-container mx-auto px-3.5'
+          'max-w-container mx-auto px-2.5'
         )}
       >
         {children}

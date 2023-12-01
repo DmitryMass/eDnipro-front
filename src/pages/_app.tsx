@@ -1,12 +1,13 @@
-import '@/styles/globals.css';
-import type { AppProps } from 'next/app';
-import { type FC, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { SessionProvider } from 'next-auth/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MainLayout } from '@/components/layouts/MainLayout';
-import 'react-toastify/dist/ReactToastify.css';
+import '@/styles/globals.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useState, type FC } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import NextNProgress from 'nextjs-progressbar';
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const [queryClient] = useState(() => new QueryClient());
@@ -18,6 +19,13 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           <title>eDnipro - projects portal</title>
         </Head>
         <MainLayout>
+          <NextNProgress
+            color='#027bff'
+            options={{ showSpinner: false }}
+            startPosition={0.3}
+            showOnShallow={true}
+            height={5}
+          />
           <Component {...pageProps} />
           <ToastContainer
             className={'z-50'}
