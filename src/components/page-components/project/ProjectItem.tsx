@@ -31,9 +31,9 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
     <div className='bg-white text-white p-2.5 rounded-md border-[10px] border-asidePanel flex flex-col justify-between'>
       {isOpenFile ? (
         <div className='fixed inset-0 w-full h-full bg-asidePanel bg-opacity-90 flex justify-center items-center'>
-          <div className='max-w-[400px]'>
+          <div className='max-w-[800px] flex justify-center items-center flex-col h-screen'>
             <img
-              className='w-full block max-h-[600px] px-1.5'
+              className='w-full block max-h-[80vh] px-1.5'
               src={`${process.env.NEXT_PUBLIC_CLOUDINARY}${project.file.file_path}`}
               alt={project.file.file_originalName}
             />
@@ -43,24 +43,34 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
             type='button'
             classModificator='absolute top-10 right-10 w-[60px] h-[50px] z-50'
           >
-            <img className='w-8 h-8' src='/icons/close-icon.svg' alt='' />
+            <img className='w-8 h-8' src='/icons/close-icon.svg' alt='close' />
           </MainButton>
         </div>
       ) : null}
       <div className='flex justify-between items-start mb-2 gap-2'>
         <div className='text-black font-medium grow'>
-          <span className='text-s14'>Назва проекту:</span> <br />
-          <p className='mb-2'> {project.title}</p>
+          <span className='text-s14 max-sm:text-xs12'>Назва проекту:</span>{' '}
+          <br />
+          <p className='mb-2 font-semibold max-sm:text-s14'> {project.title}</p>
           {project.file ? (
-            <div className=''>
+            <div>
               <button
                 onClick={() => setIsOpenFile(true)}
-                className='text-s14 text-mainBLue block mb-1 hover:text-btnBlueHover cursor-pointer hover:underline'
+                className='max-lg:hidden text-s14 text-mainBLue block mb-1 hover:text-btnBlueHover cursor-pointer hover:underline max-sm:text-xs12'
               >
                 Переглянути зображення
               </button>
+
+              <a
+                href={`${process.env.NEXT_PUBLIC_CLOUDINARY}${project.file.file_path}`}
+                target='_blank'
+                className='lg:hidden text-s14 text-mainBLue block mb-1 hover:text-btnBlueHover cursor-pointer hover:underline max-sm:text-xs12'
+              >
+                Переглянути зображення
+              </a>
+
               <button
-                className='text-s14 text-mainBLue block hover:text-btnBlueHover cursor-pointer hover:underline'
+                className='text-s14 text-mainBLue block hover:text-btnBlueHover cursor-pointer hover:underline max-sm:text-xs12'
                 id='downloadButton'
                 onClick={() =>
                   downloadFile(
@@ -75,7 +85,7 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
           ) : null}
         </div>
         <span
-          className='text-black text-right text-xs12 font-medium pointer-events-none w-[100px]'
+          className='text-black text-right text-xs12 font-medium pointer-events-none min-w-[80px]'
           suppressHydrationWarning={true}
         >
           {formattedDynamicCreatedAt}
@@ -84,7 +94,7 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
       <div className='flex items-end justify-between gap-2'>
         <Link
           href={`${ROUTE.PROJECTS}/${project._id}`}
-          className='cursor-pointer text-white rounded-sm px-2.5 py-1 text-s14 hover:bg-opacity-90 transition-all duration-150 bg-asidePanel'
+          className='cursor-pointer text-white rounded-sm px-2.5 py-1 text-s14  hover:bg-opacity-90 transition-all duration-150 bg-asidePanel max-sm:text-xs12'
         >
           Деталі
         </Link>
@@ -92,7 +102,7 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
           <span className='text-s14 '>Автор:</span>
           <br />
           <span
-            className='block text-white px-1 rounded-sm font-normal'
+            className='block text-white px-1 rounded-sm font-normal text-s14 max-sm:text-xs12'
             style={{ backgroundColor: userBackground }}
           >
             {longAuthor}
@@ -102,7 +112,7 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
           <span className='text-s14 '>Автор:</span>
           <br />
           <span
-            className='block text-white px-1 rounded-sm font-normal'
+            className='block text-white px-1 rounded-sm font-normal text-s14 max-sm:text-xs12'
             style={{ backgroundColor: userBackground }}
           >
             {shortAuthor}

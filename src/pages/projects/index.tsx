@@ -88,11 +88,11 @@ const Projects: FC<TProjectProps> = ({
 
   return (
     <div>
-      <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium'>
+      <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium max-sm:text-xl'>
         Проекти
       </Title>
       <button
-        className='flex items-center gap-2 text-s14 hover:bg-opacity-90 font-medium mb-2 bg-asidePanel text-white p-1.5 rounded-sm'
+        className='flex items-center gap-2 text-s14 hover:bg-opacity-90 font-medium mb-2 bg-asidePanel text-white p-1.5 rounded-sm max-sm:text-xs12 max-sm:px-1.5 max-sm:py-0.5'
         onClick={toggleSortOrder}
       >
         Сортувати по даті
@@ -104,7 +104,7 @@ const Projects: FC<TProjectProps> = ({
       </button>
       {itemsPerPage.length && pageCount ? (
         <>
-          <div className='grid grid-cols-2 max-md:grid-cols-1 gap-5 mb-14'>
+          <div className='grid grid-cols-2 max-md:grid-cols-1 gap-5 mb-10'>
             {itemsPerPage.map((project) => (
               <ProjectItem key={project._id} project={project} />
             ))}

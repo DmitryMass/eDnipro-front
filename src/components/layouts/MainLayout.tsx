@@ -22,7 +22,7 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <div
       className={clsx(
         inter.className,
-        'bg-grayStroke-40 max-lg:block flex items-start'
+        'bg-grayStroke-40 max-lg:block flex items-start relative'
       )}
     >
       {pathname === ROUTE.HOME ? null : <AsidePanel />}
