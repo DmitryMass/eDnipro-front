@@ -85,8 +85,38 @@ export const useProjectActions = ({
     }
   };
 
+  const handleEditTask = async (data: TFormValues) => {
+    try {
+      const taskId = query.taskId;
+      const session = await getSession();
+      const formData = new FormData();
+
+      Object.entries(data).forEach((item) => {
+        formData.append(item[0], item[1]);
+      });
+
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_DATABASE_URL}/task/update-task/${taskId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.token}`,
+          },
+        }
+      );
+
+      await replace(asPath);
+      closeMenu && closeMenu();
+      toast.success('Task updated successfully');
+      reset();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error);
+    }
+  };
+
   return {
     handleAddNewProject,
+    handleEditTask,
     handleEditProject,
     handleSubmit,
     register,

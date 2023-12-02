@@ -1,5 +1,6 @@
 import { BindTaskToUser } from '@/components/page-components/project/BindTaskToUser';
 import { ChangeStatusBtn } from '@/components/page-components/project/ChangeStatusBtn';
+import { EditTaskForm } from '@/components/page-components/project/EditTaskForm';
 import { FileActions } from '@/components/page-components/project/FileActions';
 import { OpenFile } from '@/components/page-components/project/OpenFile';
 import { ProjectActions } from '@/components/page-components/project/ProjectActions';
@@ -75,7 +76,6 @@ const TaskPage: FC<TTaskProps> = ({ task, error }) => {
     `${ROUTE.PROJECTS}/${task.projectId}`
   );
 
-  console.log(session.data?.user.id === task.perfomingBy._id);
   return (
     <div>
       <BackBtn>Назад</BackBtn>
@@ -85,7 +85,7 @@ const TaskPage: FC<TTaskProps> = ({ task, error }) => {
       <div className='rounded-sm p-2.5 bg-white shadow-md text-black mb-4 flex max-sm:flex-col max-sm:items-stretch gap-4'>
         <div className='grow'>
           {editTask ? (
-            <></>
+            <EditTaskForm task={task} closeMenu={() => setIsEdit(false)} />
           ) : (
             <>
               <h2 className='text-black mb-4 text-xl font-medium max-sm:text-s14'>
