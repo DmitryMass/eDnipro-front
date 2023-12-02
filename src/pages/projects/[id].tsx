@@ -1,14 +1,18 @@
+import { EditProjectForm } from '@/components/forms/EditProjectForm';
 import { FileActions } from '@/components/page-components/project/FileActions';
 import { FilterTasksBtns } from '@/components/page-components/project/FilterTasksBtns';
 import { OpenFile } from '@/components/page-components/project/OpenFile';
 import { ProjectActions } from '@/components/page-components/project/ProjectActions';
 import { ProjectTaskItem } from '@/components/page-components/project/ProjectTaskItem';
+import BackBtn from '@/components/ui/BackBtn';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Pagination } from '@/components/ui/Pagination';
 import { SortByBtn } from '@/components/ui/SortByBtn';
 import { Title } from '@/components/ui/Title';
 import { useSortBy } from '@/hooks/useSortBy';
 import type { TProjectPart, TTask } from '@/types/types';
+import { handleDeleteAction } from '@/utils/fetchFn';
+import { ROUTE } from '@/utils/routes';
 import axios from 'axios';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
@@ -42,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<
     : `/project/${ctx.query.id}?page=${pageNum}&limit=6&filteredStatus=${filteredStatus}`;
 
   try {
-    const response: any = await axios.get(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_DATABASE_URL}${url}`,
       {
         headers: {
@@ -90,36 +94,52 @@ const ProjectTasks: FC<TProjectTasksProps> = ({
     );
   }
   const [isOpenFile, setIsOpenFile] = useState<boolean>(false);
+  const [editProject, setEditProject] = useState<boolean>(false);
   const { toggleSortOrder } = useSortBy();
+  const { handleDelete, isLoading } = handleDeleteAction(
+    '/project',
+    project._id,
+    ROUTE.PROJECTS
+  );
 
   return (
     <div>
+      <BackBtn>Назад</BackBtn>
       <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium max-sm:text-xl'>
         Задачі проекту
       </Title>
-      <div className='rounded-sm p-2.5 bg-white shadow-md text-black mb-4 flex max-sm:flex-col max-sm:items-start gap-6'>
+      <div className='rounded-sm p-2.5 bg-white shadow-md text-black mb-4 flex max-sm:flex-col max-sm:items-stretch gap-6'>
         <div className='grow'>
-          <h2 className='text-black mb-4 text-xl font-medium max-sm:text-s14'>
-            <span className='text-s14 font-normal max-sm:text-xs12'>
-              Назва проекту:
-            </span>{' '}
-            <br />
-            {project?.title}
-          </h2>
-          <p className='text-black font-medium max-sm:text-s14 max-w-5xl w-full mb-4'>
-            <span className='text-s14 font-normal max-sm:text-xs12'>
-              Опис проекту:
-            </span>{' '}
-            <br />
-            {project?.description}
-          </p>
+          {editProject ? (
+            <EditProjectForm
+              project={project}
+              closeMenu={() => setEditProject(false)}
+            />
+          ) : (
+            <>
+              <h2 className='text-black mb-4 text-xl font-medium max-sm:text-s14'>
+                <span className='text-s14 font-normal max-sm:text-xs12'>
+                  Назва проекту:
+                </span>{' '}
+                <br />
+                {project?.title}
+              </h2>
+              <p className='text-black font-medium max-sm:text-s14 max-w-5xl w-full mb-4'>
+                <span className='text-s14 font-normal max-sm:text-xs12'>
+                  Опис проекту:
+                </span>{' '}
+                <br />
+                {project?.description}
+              </p>
+            </>
+          )}
           {project?.file ? (
             <>
               {isOpenFile ? (
                 <OpenFile
                   setIsOpenFile={() => setIsOpenFile(false)}
-                  fileName={project?.file.file_originalName}
-                  filePath={project?.file.file_path}
+                  fileName={project.file.file_originalName}
+                  filePath={project.file.file_path}
                 />
               ) : null}
               <FileActions
@@ -130,7 +150,12 @@ const ProjectTasks: FC<TProjectTasksProps> = ({
             </>
           ) : null}
         </div>
-        <ProjectActions projectData={project} setIsEdit={() => {}} />
+        <ProjectActions
+          isEdit={editProject}
+          handleDelete={handleDelete}
+          isLoading={isLoading}
+          setIsEdit={() => setEditProject((prev) => !prev)}
+        />
       </div>
       <div>
         <div className='mb-4 flex items-center gap-2 max-sm:flex-col max-sm:items-start'>

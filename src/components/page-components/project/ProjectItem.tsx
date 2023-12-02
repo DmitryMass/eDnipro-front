@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useState, type FC } from 'react';
 import { FileActions } from './FileActions';
 import { OpenFile } from './OpenFile';
+import { DetailLink } from './DetailLink';
 
 type TProjectItemProps = {
   project: TProject;
@@ -59,12 +60,7 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
         </span>
       </div>
       <div className='flex items-end justify-between gap-2'>
-        <Link
-          href={`${ROUTE.PROJECTS}/${project._id}`}
-          className='cursor-pointer text-white rounded-sm px-2.5 py-1 text-s14  hover:bg-opacity-90 transition-all duration-150 bg-asidePanel max-sm:text-xs12'
-        >
-          Деталі
-        </Link>
+        <DetailLink route={`${ROUTE.PROJECTS}/${project._id}`} />
         <p className='text-black font-medium text-right text-ellipsis max-w-[150px] overflow-hidden whitespace-nowrap max-md:hidden pointer-events-none'>
           <span className='text-s14 '>Автор:</span>
           <br />

@@ -22,7 +22,7 @@ export const MainButton: FC<TMainButtonProps> = ({
       type={type}
       onClick={onClick}
       className={clsx(
-        'bg-asidePanel text-white text-sm14 hover:bg-black transition-all duration-200 flex justify-center items-center w-full font-semibold text-sm16 rounded-[0.25rem] border border-transparent py-1.5 px-4',
+        'bg-asidePanel text-white text-s14 hover:bg-black transition-all duration-200 flex justify-center items-center w-full font-semibold rounded-[0.25rem] border border-transparent py-1.5 px-4',
         classModificator
       )}
     >

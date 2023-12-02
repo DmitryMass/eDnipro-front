@@ -72,3 +72,14 @@ export type TMessage = {
 export type TToken = {
   token: string;
 };
+
+export type TFormValues = {
+  title: string;
+  description: string;
+  file: File;
+};
+
+export type TDefaultValuesProjectAndTask = {
+  title: string;
+  description: string;
+};

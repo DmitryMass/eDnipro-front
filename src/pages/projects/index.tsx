@@ -9,7 +9,6 @@ import type { TProject } from '@/types/types';
 import axios from 'axios';
 import type { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { type FC } from 'react';
 
 type TProjectProps = {
