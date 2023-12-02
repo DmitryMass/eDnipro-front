@@ -50,6 +50,13 @@ export type TTask = TDate & {
   file: TFile;
 };
 
+export type TProjectPart = {
+  _id: string;
+  title: string;
+  description: string;
+  tasks: TTask[];
+};
+
 export type TMessage = {
   message: string;
 };

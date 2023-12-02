@@ -1,7 +1,9 @@
 import { ProjectItem } from '@/components/page-components/project/ProjectItem';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Pagination } from '@/components/ui/Pagination';
+import { SortByBtn } from '@/components/ui/SortByBtn';
 import { Title } from '@/components/ui/Title';
+import { useSortBy } from '@/hooks/useSortBy';
 import type { TProjectResponse } from '@/types/responses';
 import type { TProject } from '@/types/types';
 import axios from 'axios';
@@ -78,30 +80,14 @@ const Projects: FC<TProjectProps> = ({
       />
     );
   }
-
-  const { query, push } = useRouter();
-  const toggleSortOrder = () => {
-    const currentSortOrder = query.sortBy || 'desc';
-    const newSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
-    push({ query: { page: 1, sortBy: newSortOrder } });
-  };
+  const { toggleSortOrder } = useSortBy();
 
   return (
     <div>
       <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium max-sm:text-xl'>
         Проекти
       </Title>
-      <button
-        className='flex items-center gap-2 text-s14 hover:bg-opacity-90 font-medium mb-2 bg-asidePanel text-white p-1.5 rounded-sm max-sm:text-xs12 max-sm:px-1.5 max-sm:py-0.5'
-        onClick={toggleSortOrder}
-      >
-        Сортувати по даті
-        <img
-          className='w-5 h-5'
-          src='/icons/sort-logo.svg'
-          alt='sortby createdAt'
-        />
-      </button>
+      <SortByBtn onClick={toggleSortOrder}>Сортувати по даті</SortByBtn>
       {itemsPerPage.length && pageCount ? (
         <>
           <div className='grid grid-cols-2 max-md:grid-cols-1 gap-5 mb-10'>
