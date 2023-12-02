@@ -26,10 +26,10 @@ export const getServerSideProps: GetServerSideProps<TTaskProps> = async (
   ctx
 ) => {
   const session = await getSession(ctx);
-  ctx.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=120, max-age=120, stale-while-revalidate=59'
-  );
+  // ctx.res.setHeader(
+  //   'Cache-Control',
+  //   'public, s-maxage=120, max-age=120, stale-while-revalidate=59'
+  // );
 
   try {
     const response = await axios.get(
