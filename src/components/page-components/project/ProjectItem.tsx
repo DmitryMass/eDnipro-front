@@ -6,6 +6,8 @@ import { downloadFile } from '@/utils/downloadFile';
 import { ROUTE } from '@/utils/routes';
 import Link from 'next/link';
 import { useState, type FC } from 'react';
+import { FileActions } from './FileActions';
+import { OpenFile } from './OpenFile';
 
 type TProjectItemProps = {
   project: TProject;
@@ -30,22 +32,11 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
   return (
     <div className='bg-white text-white p-2.5 rounded-md border-[10px] border-asidePanel flex flex-col justify-between'>
       {isOpenFile ? (
-        <div className='fixed inset-0 w-full h-full bg-asidePanel bg-opacity-90 flex justify-center items-center'>
-          <div className='max-w-[800px] flex justify-center items-center flex-col h-screen'>
-            <img
-              className='w-full block max-h-[80vh] px-1.5'
-              src={`${process.env.NEXT_PUBLIC_CLOUDINARY}${project.file.file_path}`}
-              alt={project.file.file_originalName}
-            />
-          </div>
-          <MainButton
-            onClick={() => setIsOpenFile(false)}
-            type='button'
-            classModificator='absolute top-10 right-10 w-[60px] h-[50px] z-50'
-          >
-            <img className='w-8 h-8' src='/icons/close-icon.svg' alt='close' />
-          </MainButton>
-        </div>
+        <OpenFile
+          setIsOpenFile={() => setIsOpenFile(false)}
+          fileName={project.file.file_originalName}
+          filePath={project.file.file_path}
+        />
       ) : null}
       <div className='flex justify-between items-start mb-2 gap-2'>
         <div className='text-black font-medium grow'>
@@ -53,35 +44,11 @@ export const ProjectItem: FC<TProjectItemProps> = ({ project }) => {
           <br />
           <p className='mb-2 font-semibold max-sm:text-s14'> {project.title}</p>
           {project.file ? (
-            <div>
-              <button
-                onClick={() => setIsOpenFile(true)}
-                className='max-lg:hidden text-s14 text-mainBLue block mb-1 hover:text-btnBlueHover cursor-pointer hover:underline max-sm:text-xs12'
-              >
-                Переглянути зображення
-              </button>
-
-              <a
-                href={`${process.env.NEXT_PUBLIC_CLOUDINARY}${project.file.file_path}`}
-                target='_blank'
-                className='lg:hidden text-s14 text-mainBLue block mb-1 hover:text-btnBlueHover cursor-pointer hover:underline max-sm:text-xs12'
-              >
-                Переглянути зображення
-              </a>
-
-              <button
-                className='text-s14 text-mainBLue block hover:text-btnBlueHover cursor-pointer hover:underline max-sm:text-xs12'
-                id='downloadButton'
-                onClick={() =>
-                  downloadFile(
-                    project.file.file_originalName,
-                    project.file.file_path
-                  )
-                }
-              >
-                Завантажити зображення
-              </button>
-            </div>
+            <FileActions
+              fileName={project.file.file_originalName}
+              filePath={project.file.file_path}
+              setIsOpen={() => setIsOpenFile(true)}
+            />
           ) : null}
         </div>
         <span

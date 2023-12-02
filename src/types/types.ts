@@ -9,6 +9,13 @@ export type TLogin = {
   token: string;
 };
 
+export enum FilterStatus {
+  all = 'all',
+  isOpen = 'isopen',
+  inProgress = 'inprogress',
+  isClosed = 'isclosed',
+}
+
 export enum Status {
   isOpen = 'isopen',
   inProgress = 'inprogress',
@@ -55,6 +62,7 @@ export type TProjectPart = {
   title: string;
   description: string;
   tasks: TTask[];
+  file: TFile;
 };
 
 export type TMessage = {
