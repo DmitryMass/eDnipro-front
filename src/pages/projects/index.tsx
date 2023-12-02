@@ -1,6 +1,7 @@
 import { ProjectItem } from '@/components/page-components/project/ProjectItem';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Pagination } from '@/components/ui/Pagination';
+import { SearchPanel } from '@/components/ui/SearchPanel';
 import { SortByBtn } from '@/components/ui/SortByBtn';
 import { Title } from '@/components/ui/Title';
 import { useSortBy } from '@/hooks/useSortBy';
@@ -86,6 +87,7 @@ const Projects: FC<TProjectProps> = ({
       <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium max-sm:text-xl'>
         Проекти
       </Title>
+      <SearchPanel />
       <SortByBtn onClick={toggleSortOrder}>Сортувати по даті</SortByBtn>
       {itemsPerPage.length && pageCount ? (
         <>

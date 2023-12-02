@@ -34,7 +34,7 @@ export const AsidePanel: FC = () => {
         </div>
       </aside>
 
-      <header className='w-full bg-asidePanel sticky top-0 py-3 lg:hidden'>
+      <header className='w-full bg-asidePanel sticky top-0 py-3 lg:hidden z-20'>
         <div className='max-w-7xl mx-auto px-3.5 w-full'>
           <div className='flex justify-between items-center'>
             <Logo />
