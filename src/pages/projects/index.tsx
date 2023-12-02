@@ -22,11 +22,8 @@ type TProjectProps = {
 export const getServerSideProps: GetServerSideProps<TProjectProps> = async (
   ctx
 ) => {
+  ctx.res.setHeader('Cache-Control', 'no-store, max-age=0');
   const session = await getSession(ctx);
-  // ctx.res.setHeader(
-  //   'Cache-Control',
-  //   'public, s-maxage=120, max-age=120, stale-while-revalidate=59'
-  // );
 
   let pageNum = 1;
   if (Number(ctx.query.page) >= 0) pageNum = Number(ctx.query.page);
