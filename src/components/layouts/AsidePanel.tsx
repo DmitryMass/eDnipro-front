@@ -21,7 +21,7 @@ export const AsidePanel: FC = () => {
     <>
       <aside
         className={clsx(
-          'w-aside h-screen bg-asidePanel p-6 sticky top-0 left-0 max-lg:hidden'
+          'w-aside h-screen bg-asidePanel p-6 sticky top-0 left-0 max-lg:hidden z-[1]'
         )}
       >
         <div>
