@@ -1,40 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Нюансы и "пробелы" которые можно исправить
 
-## Getting Started
+1. В Форме создания проекта сделана валидация формы (без пробелов до и после, обязательное поле, только укр-англ буквы цифры для Title проекта).
+2. Description сделан обычной textarea для ввода обычного текста с валидацией
+   Допускаются (! , . ? - + ' " () ) (Можно расширить функционал без проблем, подключив внешние бибилотеки, или динамические формы из react-hook-form, для того чтобы разделить описание на блоки - в тз не требуется)
+3. В большинстве try (catch) в кетч был опущены типы в ошибку (any).
+4. Просмотр в проекте картинки (мобильная версия отработает по ссылке, десктоп версия отработает в окне стейтом) (так же можно просто отобразить через Img на странице (если нужны будут требования))
+5. В формах а так же некоторых страницах можно сделать общие Layout по принципу DRY.
+6. Логика папки (все относяшиеся компоненты находятся в папке project тк тесно связаны + ui form и тд..) (можно разделить Таск , если будут отдельные решения по ним)
+7. Тк в тз не указано, платформа после регистрации общедоступна (проекты \ задания). Каждый может взять себе задание с любого проекта и так же провести CRUD операции.
+8. Поиск проектов разработан на основе Дебаунс + Кеширование ответов.
 
-First, run the development server:
+- (complete) Створіть головну сторінку зі списком проєктів з можливістю сортування та пошуку.
+- (complete) Реалізуйте можливість додавання нового проєкту з валідацією форми.
+- (complete) Забезпечте адаптивну верстку за допомогою Tailwind CSS.
+- (complete) Додайте можливість перегляду деталей проєкту та списку завдань в межах кожного проекту.
+- (complete 75%) Реалізуйте можливість додавання, редагування та видалення завдань.
+- (complete) Додайте оповіщення для користувача при успішній або невдалій операції.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- (complete) Додайте можливість завантажувати, переглядати та видаляти зображення для проєктів та завдань.
+- (complete) Реалізуйте пагінацію та фільтрацію списків.
+- (complete for loader ssr / some states) Додайте анімації для переходів між сторінками та зміни станів компонентів.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Есть возможность Взять таску себе отдать и закрыть таску (закрыть и отдать можно только если таска привязана к пользователю)
+(Редактировать и удалять может каждый , даже если таска не привязана к пользователю (по тз так). Но всего 1-2 проверками можно сделать возможность убрать кнопку удаление задачи и редактирования, для пользователя кому не принадлежит задача. Этот функционал доступен и нового ничего разрабатывать не нужно)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+По ТЗ отсутсвуют:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Сбросы паролей.
+2. Личный аккаунт
+3. Привязки тасок смены их статусов и так далее
+4. Какие сорты какие фильтра (самостоятельно принято решение брать из того что есть)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1 и 3 пункты можно оформить (только добавить ГЕТ на бекенд и отрисовать). Все связи, модели и тд готовы, все продумано заранее.
+2 пункт аналогично, оформить только отрисовку данных, и сделать ПУТ на апдейт данных каких-либо.

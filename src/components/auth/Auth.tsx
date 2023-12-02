@@ -43,12 +43,12 @@ export const Auth: FC = () => {
                 errors.email ? 'border-mainRed outline-mainRed' : null
               )}
               type='email'
-              placeholder='Email Address'
+              placeholder='Ваша пошта'
               {...register('email', {
-                required: 'Email is required!',
+                required: `Пошта обов'язкове поле`,
                 pattern: {
                   value: /^[a-zA-Z0-9@.]+$/,
-                  message: 'Only English letters and numbers, and no spaces.',
+                  message: 'Тільки англійські літери, цифри без пробілів.',
                 },
               })}
             />
@@ -67,14 +67,14 @@ export const Auth: FC = () => {
               type='password'
               placeholder='Password'
               {...register('password', {
-                required: 'Password is required!',
+                required: `Пароль обов'язкове поле`,
                 minLength: {
                   value: 6,
-                  message: 'Password should be at least 6 chars',
+                  message: 'Мінімум 6 символів',
                 },
                 pattern: {
                   value: /^[a-zA-Z0-9]+$/,
-                  message: 'Only English letters and numbers, and no spaces.',
+                  message: 'Тільки англійські літери, цифри без пробілів.',
                 },
               })}
             />

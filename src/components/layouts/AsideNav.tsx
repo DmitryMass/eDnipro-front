@@ -26,7 +26,7 @@ export const AsideNav: FC<TAsideNavProps> = ({ closeMenu }) => {
       <Link
         onClick={closeMenu}
         className='font-medium pr-2 py-2 text-sm16 text-lightMain max-lg:text-s14'
-        href={ROUTE.MY_TASKS}
+        href={ROUTE.MY_ACCOUNT}
       >
         Мій аккаунт (на майбутнє)
       </Link>

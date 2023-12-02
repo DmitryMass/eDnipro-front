@@ -1,13 +1,23 @@
 import { type FC } from 'react';
-import { MainButton } from '../ui/MainButton';
-import { Loader } from '../ui/Loader';
 
-export const AddNewProjectForm: FC = () => {
+import { ProjectForm } from './ProjectForm';
+
+type TAddNewProjectFormProps = {
+  closeModal: () => void;
+};
+
+export const AddNewProjectForm: FC<TAddNewProjectFormProps> = ({
+  closeModal,
+}) => {
   return (
-    <form>
-      {/* <MainButton type='submit' disabled={isSubmitting}>
-            {isSubmitting ? <Loader /> : 'Створити'}
-          </MainButton> */}
-    </form>
+    <div className='w-full'>
+      <div className='flex justify-between items-center mb-4'>
+        <h3 className='text-black font-medium'>Створити новий проект</h3>
+        <button onClick={closeModal} className='bg-asidePanel rounded-md p-1'>
+          <img className='w-5 h-5' src='/icons/close-icon.svg' alt='close' />
+        </button>
+      </div>
+      <ProjectForm closeModal={closeModal} />
+    </div>
   );
 };
