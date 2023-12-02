@@ -29,7 +29,7 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       {pathname === ROUTE.HOME ? null : <AsidePanel />}
       <main
         className={clsx(
-          'flex-1 py-5 lg:relative lg:z-[1]',
+          'flex-1 py-5 max-lg:relative max-lg:z-[1]',
           pathname === ROUTE.HOME
             ? 'max-w-loginContainer mx-auto px-2.5'
             : null,
