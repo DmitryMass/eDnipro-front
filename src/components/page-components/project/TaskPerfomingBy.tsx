@@ -5,11 +5,13 @@ import type { FC } from 'react';
 type TTaskPerfomingByProps = {
   user: TUser;
   classNameModificator?: string;
+  status: string;
 };
 
 export const TaskPerfomingBy: FC<TTaskPerfomingByProps> = ({
   user,
   classNameModificator,
+  status,
 }) => {
   const { longAuthor, shortAuthor } = convertAuthorName(
     user.firstName,
@@ -18,7 +20,9 @@ export const TaskPerfomingBy: FC<TTaskPerfomingByProps> = ({
   );
   return (
     <div className={classNameModificator}>
-      <p className='text-xs12 text-black font-medium'>Ким виконується:</p>
+      <p className='text-xs12 text-black font-medium'>
+        {status === 'inprogress' ? 'Ким виконується:' : 'Xто виконав:'}
+      </p>
       <span
         className='inline-block text-white px-1 rounded-sm font-normal text-s14 max-sm:text-xs12 max-md:hidden'
         style={{ backgroundColor: user.userBackground }}

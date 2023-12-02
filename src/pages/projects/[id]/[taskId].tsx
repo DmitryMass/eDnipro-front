@@ -1,3 +1,5 @@
+import { BindTaskToUser } from '@/components/page-components/project/BindTaskToUser';
+import { ChangeStatusBtn } from '@/components/page-components/project/ChangeStatusBtn';
 import { FileActions } from '@/components/page-components/project/FileActions';
 import { OpenFile } from '@/components/page-components/project/OpenFile';
 import { ProjectActions } from '@/components/page-components/project/ProjectActions';
@@ -11,7 +13,7 @@ import { handleDeleteAction } from '@/utils/fetchFn';
 import { ROUTE } from '@/utils/routes';
 import axios from 'axios';
 import type { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { FC, useState } from 'react';
 
 type TTaskProps = {
@@ -64,28 +66,25 @@ const TaskPage: FC<TTaskProps> = ({ task, error }) => {
       />
     );
   }
-
+  const session = useSession();
   const [isOpenFile, setIsOpenFile] = useState<boolean>(false);
   const [editTask, setIsEdit] = useState<boolean>(false);
   const { handleDelete, isLoading } = handleDeleteAction(
     '/task/delete',
     task._id as string,
-    `${ROUTE.PROJECTS}/${task._id}`
+    `${ROUTE.PROJECTS}/${task.projectId}`
   );
 
+  console.log(session.data?.user.id === task.perfomingBy._id);
   return (
     <div>
       <BackBtn>Назад</BackBtn>
       <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium max-sm:text-xl'>
         Задача
       </Title>
-      <div className='rounded-sm p-2.5 bg-white shadow-md text-black mb-4 flex max-sm:flex-col max-sm:items-stretch gap-6'>
+      <div className='rounded-sm p-2.5 bg-white shadow-md text-black mb-4 flex max-sm:flex-col max-sm:items-stretch gap-4'>
         <div className='grow'>
           {editTask ? (
-            // <EditProjectForm
-            //   project={project}
-            //   closeMenu={() => setEditProject(false)}
-            // />
             <></>
           ) : (
             <>
@@ -123,9 +122,27 @@ const TaskPage: FC<TTaskProps> = ({ task, error }) => {
           ) : null}
 
           {task.perfomingBy ? (
-            <div className='flex justify-start flex-col items-start pt-3'>
+            <div className='flex justify-start flex-col items-start pt-3 gap-2'>
               <TaskStatus status={task.status} />
-              <TaskPerfomingBy user={task.perfomingBy} />
+              <TaskPerfomingBy user={task.perfomingBy} status={task.status} />
+              {task.perfomingBy._id === session.data?.user.id ? (
+                <div>
+                  <ChangeStatusBtn
+                    changeStatus='isopen'
+                    taskId={task._id}
+                    status={task.status}
+                  >
+                    Відати задачу
+                  </ChangeStatusBtn>
+                  <ChangeStatusBtn
+                    changeStatus='isclosed'
+                    taskId={task._id}
+                    status={task.status}
+                  >
+                    Закрити задачу
+                  </ChangeStatusBtn>
+                </div>
+              ) : null}
             </div>
           ) : (
             <div className='flex justify-start flex-col items-start pt-3'>
@@ -133,7 +150,7 @@ const TaskPage: FC<TTaskProps> = ({ task, error }) => {
                 status={task.status}
                 classNameModificator='text-right'
               />
-              <p>ВЗЯТИ ЗАДАЧУ СОБІ BUTTOn</p>
+              <BindTaskToUser taskId={task._id} />
             </div>
           )}
         </div>

@@ -168,13 +168,10 @@ const ProjectTasks: FC<TProjectTasksProps> = ({
               {tasks.map((task) => (
                 <ProjectTaskItem key={task._id} task={task} />
               ))}
-              {pageCount! > 1 ? (
-                <Pagination
-                  activePageNumber={pageNum}
-                  pagesCount={pageCount!}
-                />
-              ) : null}
             </div>
+            {pageCount! > 1 ? (
+              <Pagination activePageNumber={pageNum} pagesCount={pageCount!} />
+            ) : null}
           </>
         ) : (
           <ErrorMessage

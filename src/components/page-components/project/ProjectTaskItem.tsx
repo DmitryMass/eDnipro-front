@@ -34,12 +34,13 @@ export const ProjectTaskItem: FC<TProejctTaskItemProps> = ({ task }) => {
       <div className='flex justify-between gap-4 items-end'>
         <DetailLink route={`${ROUTE.PROJECTS}/${task.projectId}/${task._id}`} />
         {task.perfomingBy ? (
-          <div className='flex flex-col items-end'>
+          <div className='flex flex-col items-end gap-1'>
             <TaskStatus
               status={task.status}
               classNameModificator='text-right'
             />
             <TaskPerfomingBy
+              status={task.status}
               user={task.perfomingBy}
               classNameModificator='text-right'
             />
