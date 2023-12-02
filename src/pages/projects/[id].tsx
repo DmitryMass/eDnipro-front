@@ -1,4 +1,5 @@
 import { EditProjectForm } from '@/components/forms/EditProjectForm';
+import { AddNewTaskIntoProject } from '@/components/page-components/project/AddNewTaskIntoProject';
 import { FileActions } from '@/components/page-components/project/FileActions';
 import { FilterTasksBtns } from '@/components/page-components/project/FilterTasksBtns';
 import { OpenFile } from '@/components/page-components/project/OpenFile';
@@ -105,9 +106,12 @@ const ProjectTasks: FC<TProjectTasksProps> = ({
   return (
     <div>
       <BackBtn>Назад</BackBtn>
-      <Title classModificator='text-2xl mb-2 text-grayStroke-90 font-medium max-sm:text-xl'>
-        Задачі проекту
-      </Title>
+      <div className='flex justify-between items-center mb-2 max-sm:flex-col max-sm:items-start'>
+        <Title classModificator='text-2xl text-grayStroke-90 font-medium max-sm:text-xl max-sm:mb-2'>
+          Задачі проекту
+        </Title>
+        <AddNewTaskIntoProject />
+      </div>
       <div className='rounded-sm p-2.5 bg-white shadow-md text-black mb-4 flex max-sm:flex-col max-sm:items-stretch gap-6'>
         <div className='grow'>
           {editProject ? (

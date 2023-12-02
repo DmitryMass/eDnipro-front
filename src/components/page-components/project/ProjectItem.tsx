@@ -1,14 +1,11 @@
-import { MainButton } from '@/components/ui/MainButton';
 import type { TProject } from '@/types/types';
 import { convertAuthorName } from '@/utils/convertAuthorName';
 import { convertDynamicDate } from '@/utils/convertDate';
-import { downloadFile } from '@/utils/downloadFile';
 import { ROUTE } from '@/utils/routes';
-import Link from 'next/link';
 import { useState, type FC } from 'react';
+import { DetailLink } from './DetailLink';
 import { FileActions } from './FileActions';
 import { OpenFile } from './OpenFile';
-import { DetailLink } from './DetailLink';
 
 type TProjectItemProps = {
   project: TProject;

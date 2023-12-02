@@ -85,6 +85,35 @@ export const useProjectActions = ({
     }
   };
 
+  const handleCreateNewTask = async (data: TFormValues) => {
+    try {
+      const projectId = query.id;
+      const session = await getSession();
+      const formData = new FormData();
+
+      Object.entries(data).forEach((item) => {
+        formData.append(item[0], item[1]);
+      });
+      formData.append('projectId', projectId as string);
+      console.log(projectId);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DATABASE_URL}/task/create-task`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.token}`,
+          },
+        }
+      );
+      await replace(asPath);
+      closeMenu && closeMenu();
+      toast.success(response?.data?.message);
+      reset();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error);
+    }
+  };
+
   const handleEditTask = async (data: TFormValues) => {
     try {
       const taskId = query.taskId;
@@ -116,6 +145,7 @@ export const useProjectActions = ({
 
   return {
     handleAddNewProject,
+    handleCreateNewTask,
     handleEditTask,
     handleEditProject,
     handleSubmit,
