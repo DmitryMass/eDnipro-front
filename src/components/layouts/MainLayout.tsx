@@ -2,8 +2,9 @@ import { ROUTE } from '@/utils/routes';
 import clsx from 'clsx';
 import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import { AsidePanel } from './AsidePanel';
+import { checkAuth } from '@/utils/checkAuth';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,9 +15,9 @@ type MainLayoutProps = {
 export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const { pathname } = useRouter();
 
-  // useEffect(() => {
-  //не забыть написать ф-цию на чек токена
-  // }, []);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <div
